@@ -1,0 +1,178 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\rulesengine\\rulesengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|solutionrelative:rulesengine\\rulesengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\rulesengine\\generalruleevaluator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|solutionrelative:rulesengine\\generalruleevaluator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21844950-25AD-497B-9D83-EB1FE281B8B8}|CodeReviewTool\\CodeReviewTool.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\codereviewtool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21844950-25AD-497B-9D83-EB1FE281B8B8}|CodeReviewTool\\CodeReviewTool.csproj|solutionrelative:codereviewtool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21844950-25AD-497B-9D83-EB1FE281B8B8}|CodeReviewTool\\CodeReviewTool.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\codereviewtool\\rulesconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{21844950-25AD-497B-9D83-EB1FE281B8B8}|CodeReviewTool\\CodeReviewTool.csproj|solutionrelative:codereviewtool\\rulesconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\rulesengine\\contexts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|solutionrelative:rulesengine\\contexts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\rulesengine\\rule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|solutionrelative:rulesengine\\rule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\rulesengine\\irule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|solutionrelative:rulesengine\\irule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|c:\\users\\xolan\\source\\repos\\codereviewtool\\rulesengine\\ruleconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8A2E7A3-7B66-4A2F-A5A9-86EAA7A127C1}|RulesEngine\\RulesEngine.csproj|solutionrelative:rulesengine\\ruleconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{ecb7191a-597b-41f5-9843-03a4cf275dde}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "contexts.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\contexts.cs",
+              "RelativeDocumentMoniker": "RulesEngine\\contexts.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\contexts.cs",
+              "RelativeToolTip": "RulesEngine\\contexts.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAHkAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-23T10:10:34.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Rule.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\Rule.cs",
+              "RelativeDocumentMoniker": "RulesEngine\\Rule.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\Rule.cs",
+              "RelativeToolTip": "RulesEngine\\Rule.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAgAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-23T08:09:48.123Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\CodeReviewTool\\Program.cs",
+              "RelativeDocumentMoniker": "CodeReviewTool\\Program.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\CodeReviewTool\\Program.cs",
+              "RelativeToolTip": "CodeReviewTool\\Program.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAAwBkAAACKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-22T22:09:39.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IRule.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\IRule.cs",
+              "RelativeDocumentMoniker": "RulesEngine\\IRule.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\IRule.cs",
+              "RelativeToolTip": "RulesEngine\\IRule.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAB7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-22T20:12:09.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RulesEngine.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\RulesEngine.cs",
+              "RelativeDocumentMoniker": "RulesEngine\\RulesEngine.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\RulesEngine.cs",
+              "RelativeToolTip": "RulesEngine\\RulesEngine.cs",
+              "ViewState": "AQIAAGQAAAAAAAAAAAAmwJsAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-22T20:04:07.765Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GeneralRuleEvaluator.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\GeneralRuleEvaluator.cs",
+              "RelativeDocumentMoniker": "RulesEngine\\GeneralRuleEvaluator.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\GeneralRuleEvaluator.cs",
+              "RelativeToolTip": "RulesEngine\\GeneralRuleEvaluator.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcBAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-22T20:01:56.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RuleConfig.cs",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\RuleConfig.cs",
+              "RelativeDocumentMoniker": "RulesEngine\\RuleConfig.cs",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\RulesEngine\\RuleConfig.cs",
+              "RelativeToolTip": "RulesEngine\\RuleConfig.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-22T19:56:15.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "rulesConfig.json",
+              "DocumentMoniker": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\CodeReviewTool\\rulesConfig.json",
+              "RelativeDocumentMoniker": "CodeReviewTool\\rulesConfig.json",
+              "ToolTip": "C:\\Users\\Xolan\\source\\repos\\CodeReviewTool\\CodeReviewTool\\rulesConfig.json",
+              "RelativeToolTip": "CodeReviewTool\\rulesConfig.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-14T06:21:38.803Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 79,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{9a7cebbb-dc5c-4986-bc49-962da46aa506}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

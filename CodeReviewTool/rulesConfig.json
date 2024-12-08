@@ -1,0 +1,69 @@
+{
+  "RuleGroups": {
+    "Variables": {
+      "Rules": {
+        "VAR-001": {
+          "Description": "Ensures variable names use an approved prefix, a correct suffix (if applicable), conform to a defined casing style (snake, pascal, or camel case), and include a Hungarian notation type prefix.",
+          "Characters": [ "_" ],
+          "Prefixes": [ "in", "gin", "out", "gout", "v", "gv", "col", "gcol", "vrsa", "sv", "s", "gsv", "gs" ],
+          "Suffixes": [],
+          "MultiwordDelimited": [ "snakecase", "pascalcase", "camelcase" ],
+          "HungarianNotation": [ "d", "dt", "f", "n", "p", "tx", "tm", "ts", "i", "b" ],
+          "Error Message": "Variable '{NAMEOFVAR}' violates naming conventions. Expected prefix: {EXPECTEDPREFIXES}, casing: {CASESTYLE}, and Hungarian notation: {HUNGARIANNOTATION}.",
+          "Active": true
+        },
+
+        "VAR-002": {
+          "Description": "Validates that variable prefixes align with their exposure level, ensuring consistent naming practices that reflect variable scope and usage context.",
+          "Environment Prefixes": [ "VRSA", "ev", "!ev" ],
+          "Session Prefixes": [ "sv", "gsv" ],
+          "Statistic Prefixes": [ "s", "gs" ],
+          "Error Message": "Variable '{NAMEOFVAR}' uses a prefix inconsistent with its exposure '{EXPOSURE}'. Expected prefixes for '{EXPOSURETYPE}': {EXPECTEDPREFIXES}.",
+          "Active": true
+        },
+
+        "VAR-003": {
+          "Description": "Checks that variables intended for global access are properly prefixed, ensuring that naming conventions signal the variable's broader availability across environments.",
+          "Prefixes": [ "g", "gv", "gcol", "gin", "gs", "gsv", "gout" ],
+          "Error Message": "Global variable '{NAMEOFVAR}' lacks the correct prefix indicating its scope. Expected global prefixes: {EXPECTEDPREFIXES}.",
+          "Active": true
+        },
+
+        "VAR-004": {
+          "Description": "Limits variable name length to enhance readability and maintain coding standards, preventing excessively long names that can obscure code understanding.",
+          "Length": 15,
+          "Error Message": "Variable '{NAMEOFVAR}' exceeds the maximum allowed length of {LENGTH} characters.",
+          "Active": true
+        },
+
+        "VAR-005": {
+          "Description": "Ensures variables are declared within the appropriate stages of the process, reflecting their intended use and lifecycle, thus enhancing code structure and clarity.",
+          "Start Stage Allowed Prefixes": [ "in", "gin" ],
+          "End Stage Allowed Prefixes": [ "out", "gout" ],
+          "Error Message": "Variable '{NAMEOFVAR}', with prefix '{PREFIX}', must be declared within {EXPECTEDSTAGES} stages to align with its lifecycle.",
+          "Active": true
+        }
+
+      }
+    },
+
+    "Pages": {
+      "Rules": {
+        "PAGE-001": {
+          "Description": "Ensures the process does not exceed a maximum page count to maintain manageability and navigability. Processes with too many pages can be difficult to maintain and navigate.",
+          "Count": 10,
+          "Error Message": "Process '{PROCESSNAME}' has exceeded the maximum allowed page count of {MAXPAGES}. Consider organizing content into additional processes or sub-processes for clarity.",
+          "Active": true
+        },
+
+        "PAGE-002": {
+          "Description": "Checks if the page has a description defined by checking the number of words in it.",
+          "Word Count": 15,
+          "Error Message": "The minimum number of words in the description box required are {WORDCOUNT}",
+          "Active": true
+        }
+      }
+
+    }
+  }
+}

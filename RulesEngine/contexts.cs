@@ -90,6 +90,14 @@ namespace RulesEngine
         public bool? AlwaysInit { get; set; }
         public bool? Private { get; set; }
 
+        public bool HasCollectionInfo { get; set; }
+
+        public string? ResourceObject { get; set; }
+
+        public string? ResourceAction { get; set; }
+
+        public string? GroupId { get; set; }
+
         public List<string?> Inputs { get; set; } = new List<string?>();
         public List<string?> Outputs { get; set; } = new List<string?>();
 
@@ -140,6 +148,10 @@ namespace RulesEngine
                         AlwaysInit = stage.Elements("alwaysinit").Any(),
                         Private = stage.Elements("private").Any(),
                         Datatype = stage.Elements("datatype").FirstOrDefault()?.Value,
+                        HasCollectionInfo = stage.Elements("collectioninfo").Any(),
+                        ResourceObject = stage.Elements("resource").FirstOrDefault()?.Attribute("object")?.Value,
+                        ResourceAction = stage.Elements("resource").FirstOrDefault()?.Attribute("action")?.Value,
+                        GroupId = stage.Elements("groupid").FirstOrDefault()?.Value,
                         Display = new Display(
                             (int?)stage.Element("display")?.Attribute("x"),
                             (int?)stage.Element("display")?.Attribute("y"),
@@ -189,7 +201,12 @@ namespace RulesEngine
                         LoginInhibit = stage.Elements("loginhibit").FirstOrDefault() != null ? (bool?)stage.Element("loginhibit").Attribute("onsuccess") : null,
                         InitialValue = stage.Elements("initialvalue").FirstOrDefault() != null ? (string)stage.Element("initialvalue") : "",
                         AlwaysInit = stage.Elements("alwaysinit").Any(),
-                        Private = stage.Elements("private").Any()
+                        Private = stage.Elements("private").Any(),
+                        Datatype = stage.Elements("datatype").FirstOrDefault()?.Value,
+                        HasCollectionInfo = stage.Elements("collectioninfo").Any(),
+                        ResourceObject = stage.Elements("resource").FirstOrDefault()?.Attribute("object")?.Value,
+                        ResourceAction = stage.Elements("resource").FirstOrDefault()?.Attribute("action")?.Value,
+                        GroupId = stage.Elements("groupid").FirstOrDefault()?.Value
                     };
 
                     // Check if inputs are present and then extract, otherwise initialize to empty list

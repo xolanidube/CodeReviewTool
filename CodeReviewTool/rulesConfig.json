@@ -101,6 +101,91 @@
           "Description": "Validates that Block stages include at least one Recover stage within their bounds to handle errors.",
           "Error Message": "Block '{BLOCKNAME}' on page '{PAGENAME}' does not contain a Recover stage for error handling.",
           "Active": true
+        },
+        "STAGE-NAME-001": {
+          "Description": "Stage names must be unique within a page.",
+          "Error Message": "Stage name '{STAGENAME}' appears more than once on page '{PAGENAME}'.",
+          "Active": true
+        },
+        "STAGE-NAME-002": {
+          "Description": "Decision stage names should end with a question mark.",
+          "Error Message": "Decision stage '{STAGENAME}' on page '{PAGENAME}' should end with a question mark.",
+          "Active": true
+        },
+        "STAGE-NAME-003": {
+          "Description": "Stage names should not contain special characters or end with punctuation.",
+          "Disallowed Characters": ["!", "#", "%"],
+          "Error Message": "Stage name '{STAGENAME}' on page '{PAGENAME}' contains invalid characters or punctuation.",
+          "Active": true
+        },
+        "STAGE-DOC-001": {
+          "Description": "Specified stage types must include a narrative.",
+          "Stage Types": ["Block", "Recover", "Resume", "Action"],
+          "Error Message": "Stage '{STAGENAME}' on page '{PAGENAME}' requires a narrative.",
+          "Active": true
+        },
+        "STAGE-ERR-002": {
+          "Description": "Recover stages must be paired with a Resume within the same block.",
+          "Error Message": "Recover stage '{STAGENAME}' on page '{PAGENAME}' lacks a corresponding Resume stage.",
+          "Active": true
+        },
+        "STAGE-ERR-003": {
+          "Description": "Main page must contain a global error handler block with Recover and Resume or Exception stages.",
+          "Error Message": "Global error handler missing in block '{BLOCKNAME}'.",
+          "Active": true
+        },
+        "STAGE-DATA-001": {
+          "Description": "Data items with AlwaysInit or Private must define an initial value.",
+          "Error Message": "Data stage '{STAGENAME}' on page '{PAGENAME}' requires an initial value.",
+          "Active": true
+        },
+        "STAGE-DATA-002": {
+          "Description": "Collection stages must define column structures.",
+          "Error Message": "Collection '{STAGENAME}' on page '{PAGENAME}' lacks column definitions.",
+          "Active": true
+        },
+        "STAGE-ACT-001": {
+          "Description": "Action stage parameters must reference existing data items.",
+          "Error Message": "Action stage '{STAGENAME}' on page '{PAGENAME}' references unknown stage '{REFNAME}'.",
+          "Active": true
+        },
+        "STAGE-ACT-002": {
+          "Description": "Action stages require both object and action names.",
+          "Error Message": "Action stage '{STAGENAME}' on page '{PAGENAME}' must specify object and action names.",
+          "Active": true
+        },
+        "STAGE-LOOP-001": {
+          "Description": "LoopStart stages must have a matching LoopEnd with the same group id.",
+          "Error Message": "LoopStart '{STAGENAME}' on page '{PAGENAME}' has no matching LoopEnd stage.",
+          "Active": true
+        },
+        "STAGE-ANCHOR-001": {
+          "Description": "Anchor stages should start with the word 'Anchor'.",
+          "Error Message": "Anchor stage '{STAGENAME}' on page '{PAGENAME}' is not named correctly.",
+          "Active": true
+        },
+        "STAGE-POS-001": {
+          "Description": "Stages should not overlap on a page.",
+          "Error Message": "Stage '{STAGENAME}' on page '{PAGENAME}' overlaps another stage.",
+          "Active": true
+        },
+        "STAGE-POS-002": {
+          "Description": "Data and Block stages should use standard dimensions.",
+          "Width": 90,
+          "Height": 60,
+          "Error Message": "Stage '{STAGENAME}' on page '{PAGENAME}' does not match standard size.",
+          "Active": true
+        },
+        "STAGE-MISC-001": {
+          "Description": "Specified stages must have login inhibit enabled.",
+          "Stage Names": ["Ecommerce::Launch", "Ecommerce::Close"],
+          "Error Message": "Stage '{STAGENAME}' on page '{PAGENAME}' should have login inhibit set.",
+          "Active": true
+        },
+        "STAGE-MISC-002": {
+          "Description": "Environment, Session or Statistic variables must be declared on the main page only.",
+          "Error Message": "Data '{STAGENAME}' with exposure '{EXPOSURE}' must be defined on the main page.",
+          "Active": true
         }
       }
     }

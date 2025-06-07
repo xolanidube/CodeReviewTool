@@ -185,30 +185,11 @@ namespace RulesEngine
                             break;
                         case "Stages":
                             var stageContexts = contexts.GetContexts<StageContext>();
-                            if (ruleId == "STAGE-002")
-                            {
-                                additionalProperties.Add("AllStages", stageContexts.ToList());
-                                stageContexts = stageContexts.Where(s => s.Type.Equals("Block")).ToList();
-                            }
-
+                            additionalProperties.Add("AllStages", stageContexts.ToList());
                             foreach (var context in stageContexts)
                             {
                                 bool result = Evaluate(ruleId, context, additionalProperties);
                                 Console.WriteLine(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
-                            }
-                            break;
-                        case "Stages":
-                            var stageContexts = contexts.GetContexts<StageContext>();
-                            if (ruleId == "STAGE-002")
-                            {
-                                additionalProperties.Add("AllStages", stageContexts.ToList());
-                                stageContexts = stageContexts.Where(s => s.Type.Equals("Block")).ToList();
-                            }
-
-                            foreach (var context in stageContexts)
-                            {
-                                bool result = Evaluate(ruleId, context, additionalProperties);
-                                messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
                             }
                             break;
                         case "Pages":
@@ -296,6 +277,15 @@ namespace RulesEngine
                             }
 
                             foreach (var context in sContexts)
+                            {
+                                bool result = Evaluate(ruleId, context, additionalProperties);
+                                messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
+                            }
+                            break;
+                        case "Stages":
+                            var stageContexts = contexts.GetContexts<StageContext>();
+                            additionalProperties.Add("AllStages", stageContexts.ToList());
+                            foreach (var context in stageContexts)
                             {
                                 bool result = Evaluate(ruleId, context, additionalProperties);
                                 messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");

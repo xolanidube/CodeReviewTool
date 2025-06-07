@@ -209,6 +209,94 @@ namespace RulesEngine
             }
         }
 
+        public List<string> ValidateAllWithResults()
+        {
+            var messages = new List<string>();
+            foreach (var ruleId in _rules.Keys)
+            {
+                var ruleProperties = _rules[ruleId];
+                string ruleGroupKey = null;
+
+                foreach (var groupEntry in ruleConfig.RuleGroups)
+                {
+                    if (groupEntry.Value.Rules.ContainsKey(ruleId))
+                    {
+                        ruleGroupKey = groupEntry.Key;
+                        break;
+                    }
+                }
+
+                if (ruleProperties.TryGetValue("Active", out var activeValue) && Convert.ToBoolean(activeValue))
+                {
+                    Dictionary<string, object> additionalProperties = new Dictionary<string, object>();
+                    switch (ruleGroupKey)
+                    {
+                        case "Variables":
+                            var sContexts = contexts.GetContexts<StageContext>();
+
+                            if (ruleId == "VAR-001")
+                            {
+                                sContexts = sContexts.Where(s => s.Type.Equals("Data")).ToList();
+                            }
+
+                            if (ruleId == "VAR-002")
+                            {
+                                sContexts = sContexts.Where(s => !string.IsNullOrEmpty(s.Exposure)).ToList();
+                            }
+
+                            if (ruleId == "VAR-003")
+                            {
+                                sContexts = sContexts.Where(s => s.Type.Equals("Data") && s.Private != null).ToList();
+                            }
+
+                            if (ruleId == "VAR-004")
+                            {
+                                sContexts = sContexts.Where(s => s.Type.Equals("Data")).ToList();
+                            }
+
+                            if (ruleId == "VAR-005")
+                            {
+                                sContexts = sContexts.Where(s => s.Type.Equals("Start") || s.Type.Equals("End")).ToList();
+                            }
+
+                            if (ruleId == "VAR-006")
+                            {
+                                var sBlocks = sContexts.Where(s => s.Type.Equals("Block")).ToList();
+                                sContexts = sContexts.Where(s => s.Type.Equals("Data") && s.Private != null).ToList();
+
+                                additionalProperties.Add("Blocks", sBlocks);
+                            }
+
+                            foreach (var context in sContexts)
+                            {
+                                bool result = Evaluate(ruleId, context, additionalProperties);
+                                messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
+                            }
+                            break;
+                        case "Pages":
+                            var pContexts = contexts.GetContexts<PageContext>();
+
+                            if (ruleId == "PAGE-001")
+                            {
+                                bool result = Evaluate(ruleId, pContexts.ToList()[0], additionalProperties);
+                                messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
+                            }
+                            else
+                            {
+                                foreach (var context in pContexts)
+                                {
+                                    bool result = Evaluate(ruleId, context, additionalProperties);
+                                    messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return messages;
+        }
+
 
     }
 }

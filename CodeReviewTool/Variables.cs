@@ -113,6 +113,7 @@ namespace RulesEngine
             var stages = xmlContent.Descendants("stage")
                 .Select(stage => new StageContext
                 {
+                    StageId = (string?)stage.Attribute("stageid"),
                     Name = (string)stage.Attribute("name"),
                     Type = (string)stage.Attribute("type"),
                     Exposure = (string)stage.Element("exposure") // Assuming 'exposure' is a direct child of 'stage'
@@ -150,7 +151,7 @@ namespace RulesEngine
 
     public class StageContext
     {
-        public string stageid { get; set; }
+        public string? StageId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Exposure { get; set; }

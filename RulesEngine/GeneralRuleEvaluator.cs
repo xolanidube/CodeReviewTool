@@ -23,10 +23,12 @@ namespace RulesEngine
             {
                 return EvaluateBasedOnContextType(ruleId, ruleProperties, pageContext, additionalprops);
             }
-            // Handle other context types as necessary
+            else if (context is PythonContext pyContext)
+            {
+                return EvaluateBasedOnContextType(ruleId, ruleProperties, pyContext);
+            }
             else
             {
-                // This block can be used to log or handle unsupported context types appropriately
                 throw new NotImplementedException("Context type not supported.");
             }
         }
@@ -51,6 +53,17 @@ namespace RulesEngine
                     return EvaluateVar006(ruleProperties, stageContext, additionalprops);
                 case "VAR-007":
                     return EvaluateVar007(ruleProperties, stageContext);
+
+                case "SEC-001":
+                    return EvaluateSec001(ruleProperties, stageContext);
+                case "SEC-002":
+                    return EvaluateSec002(ruleProperties, stageContext);
+                case "ENV-001":
+                    return EvaluateEnv001(ruleProperties, stageContext);
+                case "LOG-001":
+                    return EvaluateLog001(ruleProperties, stageContext, additionalprops);
+                case "LOG-002":
+                    return EvaluateLog002(ruleProperties, stageContext);
 
                 case "STAGE-001":
                     return EvaluateStage001(ruleProperties, stageContext);
@@ -83,6 +96,19 @@ namespace RulesEngine
             }
 
             return false; // Placeholder return statement
+        }
+
+        private bool EvaluateBasedOnContextType(string ruleId, Dictionary<string, object> ruleProperties, PythonContext context)
+        {
+            switch (ruleId)
+            {
+                case "PY-001":
+                    return EvaluatePy001(ruleProperties, context);
+                case "PY-002":
+                    return EvaluatePy002(ruleProperties, context);
+                default:
+                    throw new NotImplementedException($"Evaluation for rule {ruleId} is not implemented for Python.");
+            }
         }
 
         private bool EvaluateVar001(Dictionary<string, object> properties, StageContext context)
@@ -371,6 +397,112 @@ namespace RulesEngine
             return true;
         }
 
+        private bool EvaluateSec001(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            bool sensitiveName = context.Name != null &&
+                (context.Name.ToLower().Contains("password") ||
+                 context.Name.ToLower().Contains("username") ||
+                 context.Name.ToLower().Contains("key"));
+
+            if ((context.Datatype != null && context.Datatype.Equals("password", StringComparison.OrdinalIgnoreCase)) || sensitiveName)
+            {
+                if (!string.IsNullOrEmpty(context.InitialValue) || context.Private != true)
+                {
+                    string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                    Console.WriteLine(msg);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateSec002(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (string.Equals(context.Exposure, "Environment", StringComparison.OrdinalIgnoreCase))
+            {
+                var name = context.Name?.ToLower() ?? string.Empty;
+                if ((name.Contains("password") || name.Contains("key") || name.Contains("username")) && context.Private != true)
+                {
+                    string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                    Console.WriteLine(msg);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateEnv001(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            var value = context.InitialValue ?? string.Empty;
+            bool isAbsolute = value.StartsWith("\\\\") || System.Text.RegularExpressions.Regex.IsMatch(value, @"^[A-Za-z]:\\");
+            if (isAbsolute)
+            {
+                string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateLog001(Dictionary<string, object> properties, StageContext context, Dictionary<string, object>? additionalProps)
+        {
+            if (!string.Equals(context.Type, "Action", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (additionalProps == null || !additionalProps.TryGetValue("Blocks", out var blocksObj) || blocksObj is not List<StageContext> blocks)
+            {
+                return true;
+            }
+
+            bool inside = blocks.Any(b => IsContextWithinBlock(context, b));
+            if (!inside)
+            {
+                string msg = properties["Error Message"].ToString().Replace("{STAGENAME}", context.Name);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateLog002(Dictionary<string, object> properties, StageContext context)
+        {
+            if (string.IsNullOrEmpty(context.Name))
+            {
+                return true;
+            }
+
+            var lower = context.Name.ToLower();
+            if (lower.Contains("recove") || lower.Contains("occurance"))
+            {
+                string msg = properties["Error Message"].ToString().Replace("{STAGENAME}", context.Name);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
         private bool EvaluateStage001(Dictionary<string, object> properties, StageContext context)
         {
             int requiredWordCount = Convert.ToInt32(properties["Word Count"]);
@@ -493,6 +625,30 @@ namespace RulesEngine
             if (preWordCount < requiredWordCount || postWordCount < requiredWordCount)
             {
                 Console.WriteLine(errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluatePy001(Dictionary<string, object> properties, PythonContext context)
+        {
+            if (context.Code.Contains("eval(") || context.Code.Contains("exec("))
+            {
+                string msg = properties["Error Message"].ToString().Replace("{FILEPATH}", context.FilePath);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluatePy002(Dictionary<string, object> properties, PythonContext context)
+        {
+            if (context.Code.Contains("TODO"))
+            {
+                string msg = properties["Error Message"].ToString().Replace("{FILEPATH}", context.FilePath);
+                Console.WriteLine(msg);
                 return false;
             }
 

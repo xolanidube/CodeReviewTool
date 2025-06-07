@@ -11,7 +11,15 @@ Execute the following command from the repository root to run all tests:
 dotnet test
 ```
 
-A .NET rule engine for validating Blue Prism process files.
+## Command line usage
+Run the console with:
+```bash
+CodeReviewTool <target> <file> [rulesConfig]
+```
+The default rules configuration is `rulesConfig.<target>.json`. Targets supported: `BluePrism`, `Python`.
+
+
+A .NET rule engine for validating Blue Prism and Python code. Specify the target when running.
 
 See [docs/rules.md](docs/rules.md) for details on the rule configuration format and evaluator behavior.
 

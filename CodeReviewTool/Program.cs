@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Xml.Linq;
 using RulesEngine;
-
 
 namespace CodeReviewTool
 {
-
-    
-
-
     internal class Program
     {
-
-        
-
         static void Main(string[] args)
         {
+            if (args.Length < 2)
+            {
+                Console.WriteLine("Usage: CodeReviewTool <target> <file> [rulesConfig]");
+                Console.WriteLine("Targets: BluePrism, Python");
+                return;
+            }
+
+            var target = args[0];
+            var file = args[1];
+            var configPath = args.Length > 2 ? args[2] : $"rulesConfig.{target.ToLower()}.json";
+
             var engine = new RulesEngine.RulesEngine();
             try
             {
-                engine.LoadRuleConfig("rulesConfig.json");
+                engine.LoadRuleConfig(configPath);
                 engine.AddRulesFromConfig();
             }
             catch (Exception ex)
@@ -34,35 +33,27 @@ namespace CodeReviewTool
 
             try
             {
-                engine.Initialize(@"C:\Users\Xolan\Downloads\Processes\BPA Process - RBBAT10SS_Process Card and Card Blocks and Holds Closures.bpprocess");
+                if (target.Equals("BluePrism", StringComparison.OrdinalIgnoreCase))
+                {
+                    engine.Initialize(file);
+                }
+                else if (target.Equals("Python", StringComparison.OrdinalIgnoreCase))
+                {
+                    engine.LoadPythonFile(file);
+                }
+                else
+                {
+                    Console.WriteLine($"Unsupported target: {target}");
+                    return;
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Failed to load process file: {ex.Message}");
+                Console.WriteLine($"Failed to load input file: {ex.Message}");
                 return;
             }
 
             engine.ValidateAll();
-
-            // Load the XML content
-            //var xmlContent = XElement.Load(@"C:\Users\Xolan\Downloads\Processes\BPA Process - Variable Rules.bpprocess");
-
-            //var stageContexts = stageContext.ExtractStageContexts(xmlContent, "Data")
-            //.Where(s => !string.IsNullOrEmpty(s.Exposure))
-            //.ToList();
-
-            // Register the general rule evaluator
-            //engine.RegisterEvaluator(Rule.Id , new GeneralRuleEvaluator());
-
-            // Evaluate rules against contexts
-            /*foreach (var sContext in stageContexts)
-            {
-                // Adapt this to loop through all applicable rules instead of hardcoding "VAR-002"
-                bool result = engine.Evaluate("VAR-002", sContext);
-                //Console.WriteLine(result ? "Variable name is valid." : "Variable name is invalid.");
-            }*/
-
-            Console.ReadLine();
         }
     }
 }

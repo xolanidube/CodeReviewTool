@@ -1,0 +1,18 @@
+{
+  "RuleGroups": {
+    "Python": {
+      "Rules": {
+        "PY-001": {
+          "Description": "Avoid use of eval or exec in Python code.",
+          "Error Message": "File {FILEPATH} uses eval/exec which is insecure.",
+          "Active": true
+        },
+        "PY-002": {
+          "Description": "Do not leave TODO comments in code.",
+          "Error Message": "File {FILEPATH} contains TODO comments.",
+          "Active": true
+        }
+      }
+    }
+  }
+}

@@ -21,6 +21,9 @@ app.MapPost("/api/validate", async (HttpRequest request, RulesEngine.RulesEngine
         return Results.BadRequest("Expected multipart/form-data");
     }
 
+    var target = request.Form["target"].ToString();
+    if (string.IsNullOrEmpty(target)) target = "BluePrism";
+
     var file = request.Form.Files["process"];
     if (file == null)
     {
@@ -33,9 +36,23 @@ app.MapPost("/api/validate", async (HttpRequest request, RulesEngine.RulesEngine
         await file.CopyToAsync(stream);
     }
 
-    engine.LoadRuleConfig("rulesConfig.json");
-    engine.AddRulesFromConfig();
-    engine.Initialize(tempPath);
+    var configPath = $"rulesConfig.{target.ToLower()}.json";
+    try
+    {
+        engine.LoadRuleConfig(configPath);
+        engine.AddRulesFromConfig();
+
+        if (target.Equals("BluePrism", StringComparison.OrdinalIgnoreCase))
+            engine.Initialize(tempPath);
+        else if (target.Equals("Python", StringComparison.OrdinalIgnoreCase))
+            engine.LoadPythonFile(tempPath);
+        else
+            return Results.BadRequest($"Unsupported target {target}");
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(ex.Message);
+    }
 
     var results = engine.ValidateAllWithResults();
     File.Delete(tempPath);

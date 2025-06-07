@@ -1,6 +1,6 @@
 # Rules Configuration
 
-The `rulesConfig.json` file defines how the `RulesEngine` validates a process. Rules are organized into **rule groups** under the `RuleGroups` section. Each group contains a `Rules` object mapping a rule ID to its properties.
+The `rulesConfig.<target>.json` file (e.g., `rulesConfig.blueprism.json` or `rulesConfig.python.json`) defines how the `RulesEngine` validates a process. Rules are organized into **rule groups** under the `RuleGroups` section. Each group contains a `Rules` object mapping a rule ID to its properties.
 
 Example structure:
 
@@ -33,7 +33,7 @@ Rules in the **Variables** group validate naming and placement of variables. Com
 
 ### Adding a new variable rule
 
-Add a new rule ID under `Variables -> Rules` in `rulesConfig.json`:
+Add a new rule ID under `Variables -> Rules` in `rulesConfig.<target>.json`:
 
 ```json
 "VAR-006": {

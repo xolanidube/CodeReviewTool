@@ -5,7 +5,8 @@ using RulesEngine;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<RulesEngine.RulesEngine>();
+// create a fresh engine for each request to avoid stale state
+builder.Services.AddScoped<RulesEngine.RulesEngine>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -14,17 +15,21 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapPost("/api/validate", async (HttpRequest request, RulesEngine.RulesEngine engine) =>
+string GetConfigPath(HttpRequest request)
 {
-    if (!request.HasFormContentType)
+    var config = request.Query["config"].ToString();
+    if (string.IsNullOrWhiteSpace(config))
     {
-        return Results.BadRequest("Expected multipart/form-data");
+        return "rulesConfig.json";
     }
+    return config;
+}
 
-    var file = request.Form.Files["process"];
+async Task<IResult> ValidateFile(IFormFile file, HttpRequest request, RulesEngine.RulesEngine engine)
+{
     if (file == null)
     {
-        return Results.BadRequest("Process file not provided");
+        return Results.BadRequest("File not provided");
     }
 
     var tempPath = Path.GetTempFileName();
@@ -33,13 +38,35 @@ app.MapPost("/api/validate", async (HttpRequest request, RulesEngine.RulesEngine
         await file.CopyToAsync(stream);
     }
 
-    engine.LoadRuleConfig("rulesConfig.json");
+    engine.LoadRuleConfig(GetConfigPath(request));
     engine.AddRulesFromConfig();
     engine.Initialize(tempPath);
 
     var results = engine.ValidateAllWithResults();
     File.Delete(tempPath);
     return Results.Json(results);
+}
+
+app.MapPost("/api/validate/process", async (HttpRequest request, RulesEngine.RulesEngine engine) =>
+{
+    if (!request.HasFormContentType)
+    {
+        return Results.BadRequest("Expected multipart/form-data");
+    }
+
+    var file = request.Form.Files["process"];
+    return await ValidateFile(file, request, engine);
+});
+
+app.MapPost("/api/validate/object", async (HttpRequest request, RulesEngine.RulesEngine engine) =>
+{
+    if (!request.HasFormContentType)
+    {
+        return Results.BadRequest("Expected multipart/form-data");
+    }
+
+    var file = request.Form.Files["object"];
+    return await ValidateFile(file, request, engine);
 });
 
 app.Run();

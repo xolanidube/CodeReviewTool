@@ -42,8 +42,19 @@
           "End Stage Allowed Prefixes": [ "out", "gout" ],
           "Error Message": "Variable '{NAMEOFVAR}', with prefix '{PREFIX}', must be declared within {EXPECTEDSTAGES} stages to align with its lifecycle.",
           "Active": true
-        }
+        },
 
+        "VAR-006": {
+          "Description": "Ensures variables appear inside their designated color-coded blocks.",
+          "Environment Variables Color": { "Name": "Environment", "Color": "Blue" },
+          "Global Variables Color": { "Name": "Global", "Color": "Green" },
+          "Local Variables Color": { "Name": "Local", "Color": "White" },
+          "Collections Color": { "Name": "Collection", "Color": "Orange" },
+          "Global Collections Color": { "Name": "Global Collections", "Color": "Purple" },
+          "Process Settings Color": { "Name": "Process Settings", "Color": "Gray" },
+          "Error Message": "Variable '{NAMEOFVAR}' on page '{PAGENAME}' is not inside its assigned block. Found inside block '{BLOCKNAME}' with color '{BLOCKCOLOR}'.",
+          "Active": true
+        }
       }
     },
 

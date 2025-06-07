@@ -42,6 +42,12 @@
           "End Stage Allowed Prefixes": [ "out", "gout" ],
           "Error Message": "Variable '{NAMEOFVAR}', with prefix '{PREFIX}', must be declared within {EXPECTEDSTAGES} stages to align with its lifecycle.",
           "Active": true
+        },
+
+        "VAR-007": {
+          "Description": "Variable names should not contain whitespace characters.",
+          "Error Message": "Variable '{NAMEOFVAR}' contains whitespace, which is not allowed.",
+          "Active": true
         }
 
       }

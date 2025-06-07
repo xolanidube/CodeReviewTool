@@ -44,12 +44,22 @@
           "Active": true
         },
 
-        "VAR-007": {
-          "Description": "Variable names should not contain whitespace characters.",
-          "Error Message": "Variable '{NAMEOFVAR}' contains whitespace, which is not allowed.",
+        "VAR-006": {
+          "Description": "Ensures variables appear inside their designated color-coded blocks.",
+          "Environment Variables Color": { "Name": "Environment", "Color": "Blue" },
+          "Global Variables Color": { "Name": "Global", "Color": "Green" },
+          "Local Variables Color": { "Name": "Local", "Color": "White" },
+          "Collections Color": { "Name": "Collection", "Color": "Orange" },
+          "Global Collections Color": { "Name": "Global Collections", "Color": "Purple" },
+          "Process Settings Color": { "Name": "Process Settings", "Color": "Gray" },
+          "Error Message": "Variable '{NAMEOFVAR}' on page '{PAGENAME}' is not inside its assigned block. Found inside block '{BLOCKNAME}' with color '{BLOCKCOLOR}'.",
           "Active": true
-        }
-
+        },
+        "VAR-007": {
+              "Description": "Variable names should not contain whitespace characters.",
+              "Error Message": "Variable '{NAMEOFVAR}' contains whitespace, which is not allowed.",
+              "Active": true
+            }
       }
     },
 

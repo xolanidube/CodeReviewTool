@@ -22,8 +22,16 @@ namespace RulesEngine
         public void Initialize(string path)
         {
             this.path = path;
-            this.xmlContent = XElement.Load(path);
-            contexts.LoadContexts(this.xmlContent);
+            try
+            {
+                this.xmlContent = XElement.Load(path);
+                contexts.LoadContexts(this.xmlContent);
+            }
+            catch (Exception ex) when (ex is IOException || ex is System.Xml.XmlException)
+            {
+                Console.WriteLine($"Could not load process file '{path}': {ex.Message}");
+                throw;
+            }
         }
 
         public void RegisterEvaluator(string ruleId, IRuleEvaluator evaluator)
@@ -39,8 +47,16 @@ namespace RulesEngine
 
         public RuleConfig LoadRuleConfig(string filePath)
         {
-            var jsonString = File.ReadAllText(filePath);
-            ruleConfig = JsonConvert.DeserializeObject<RuleConfig>(jsonString);
+            try
+            {
+                var jsonString = File.ReadAllText(filePath);
+                ruleConfig = JsonConvert.DeserializeObject<RuleConfig>(jsonString);
+            }
+            catch (Exception ex) when (ex is IOException || ex is JsonException)
+            {
+                Console.WriteLine($"Could not load rule configuration '{filePath}': {ex.Message}");
+                throw;
+            }
 
             // Manual validation (optional based on your needs)
             if (ruleConfig?.RuleGroups == null || !ruleConfig.RuleGroups.Any())

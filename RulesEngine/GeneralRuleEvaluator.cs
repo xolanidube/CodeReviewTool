@@ -62,12 +62,15 @@ namespace RulesEngine
                     return EvaluateEnv001(ruleProperties, stageContext);
                 case "ENV-002":
                     return EvaluateEnv002(ruleProperties, stageContext);
+                case "ENV-001":
+                    return EvaluateEnv001(ruleProperties, stageContext);
                 case "LOG-001":
                     return EvaluateLog001(ruleProperties, stageContext, additionalprops);
                 case "LOG-002":
                     return EvaluateLog002(ruleProperties, stageContext);
                 case "LOG-003":
                     return EvaluateLog003(ruleProperties, stageContext);
+
 
                 case "STAGE-001":
                     return EvaluateStage001(ruleProperties, stageContext);
@@ -456,6 +459,7 @@ namespace RulesEngine
             return true;
         }
 
+
         private bool EvaluateEnv001(Dictionary<string, object> properties, StageContext context)
         {
             if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
@@ -497,6 +501,7 @@ namespace RulesEngine
 
             return true;
         }
+
 
         private bool EvaluateLog001(Dictionary<string, object> properties, StageContext context, Dictionary<string, object>? additionalProps)
         {
@@ -558,6 +563,7 @@ namespace RulesEngine
 
             return true;
         }
+
 
         private bool EvaluateStage001(Dictionary<string, object> properties, StageContext context)
         {

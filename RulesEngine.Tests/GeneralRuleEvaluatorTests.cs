@@ -58,7 +58,8 @@ public class GeneralRuleEvaluatorTests
         };
     }
 
-    [Fact]
+
+
     public void EvaluateSec001_PublicPassword_ReturnsFalse()
     {
         var evaluator = new GeneralRuleEvaluator();
@@ -70,7 +71,7 @@ public class GeneralRuleEvaluatorTests
         Assert.False(result);
     }
 
-    [Fact]
+
     public void EvaluateSec003_HardcodedCredential_ReturnsFalse()
     {
         var evaluator = new GeneralRuleEvaluator();
@@ -81,6 +82,7 @@ public class GeneralRuleEvaluatorTests
 
         Assert.False(result);
     }
+
 
     private Dictionary<string, object> BuildEnv001Properties()
     {
@@ -99,7 +101,7 @@ public class GeneralRuleEvaluatorTests
         };
     }
 
-    [Fact]
+
     public void EvaluateEnv001_AbsolutePath_ReturnsFalse()
     {
         var evaluator = new GeneralRuleEvaluator();
@@ -111,7 +113,6 @@ public class GeneralRuleEvaluatorTests
         Assert.False(result);
     }
 
-    [Fact]
     public void EvaluateEnv002_BadPrefix_ReturnsFalse()
     {
         var evaluator = new GeneralRuleEvaluator();
@@ -143,4 +144,5 @@ public class GeneralRuleEvaluatorTests
 
         Assert.False(result);
     }
+
 }

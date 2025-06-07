@@ -21,9 +21,27 @@ namespace CodeReviewTool
         static void Main(string[] args)
         {
             var engine = new RulesEngine.RulesEngine();
-            engine.LoadRuleConfig("rulesConfig.json");
-            engine.AddRulesFromConfig();
-            engine.Initialize(@"C:\Users\Xolan\Downloads\Processes\BPA Process - RBBAT10SS_Process Card and Card Blocks and Holds Closures.bpprocess");
+            try
+            {
+                engine.LoadRuleConfig("rulesConfig.json");
+                engine.AddRulesFromConfig();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load rule configuration: {ex.Message}");
+                return;
+            }
+
+            try
+            {
+                engine.Initialize(@"C:\Users\Xolan\Downloads\Processes\BPA Process - RBBAT10SS_Process Card and Card Blocks and Holds Closures.bpprocess");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load process file: {ex.Message}");
+                return;
+            }
+
             engine.ValidateAll();
 
             // Load the XML content

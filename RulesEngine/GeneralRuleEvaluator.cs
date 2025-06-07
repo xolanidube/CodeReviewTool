@@ -49,6 +49,8 @@ namespace RulesEngine
                     return EvaluateVar005(ruleProperties, stageContext);
                 case "VAR-006":
                     return EvaluateVar006(ruleProperties, stageContext, additionalprops);
+                case "VAR-007":
+                    return EvaluateVar007(ruleProperties, stageContext);
 
                 // Add cases for other VAR-XXX as needed
                 default:
@@ -345,6 +347,21 @@ namespace RulesEngine
                 return false;
             }
 
+
+            return true;
+        }
+
+        private bool EvaluateVar007(Dictionary<string, object> properties, StageContext context)
+        {
+            var variableName = context.Name;
+            var errorMessageTemplate = properties["Error Message"].ToString();
+
+            if (!string.IsNullOrEmpty(variableName) && variableName.Any(char.IsWhiteSpace))
+            {
+                string errorMessage = errorMessageTemplate.Replace("{NAMEOFVAR}", variableName);
+                Console.WriteLine(errorMessage);
+                return false;
+            }
 
             return true;
         }

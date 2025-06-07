@@ -52,6 +52,23 @@ namespace RulesEngine
                 case "VAR-007":
                     return EvaluateVar007(ruleProperties, stageContext);
 
+                case "SEC-001":
+                    return EvaluateSec001(ruleProperties, stageContext);
+                case "SEC-002":
+                    return EvaluateSec002(ruleProperties, stageContext);
+                case "SEC-003":
+                    return EvaluateSec003(ruleProperties, stageContext);
+                case "ENV-001":
+                    return EvaluateEnv001(ruleProperties, stageContext);
+                case "ENV-002":
+                    return EvaluateEnv002(ruleProperties, stageContext);
+                case "LOG-001":
+                    return EvaluateLog001(ruleProperties, stageContext, additionalprops);
+                case "LOG-002":
+                    return EvaluateLog002(ruleProperties, stageContext);
+                case "LOG-003":
+                    return EvaluateLog003(ruleProperties, stageContext);
+
                 case "STAGE-001":
                     return EvaluateStage001(ruleProperties, stageContext);
                 case "STAGE-002":
@@ -365,6 +382,177 @@ namespace RulesEngine
             {
                 string errorMessage = errorMessageTemplate.Replace("{NAMEOFVAR}", variableName);
                 Console.WriteLine(errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateSec001(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            bool sensitiveName = context.Name != null &&
+                (context.Name.ToLower().Contains("password") ||
+                 context.Name.ToLower().Contains("username") ||
+                 context.Name.ToLower().Contains("key"));
+
+            if ((context.Datatype != null && context.Datatype.Equals("password", StringComparison.OrdinalIgnoreCase)) || sensitiveName)
+            {
+                if (!string.IsNullOrEmpty(context.InitialValue) || context.Private != true)
+                {
+                    string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                    Console.WriteLine(msg);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateSec002(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (string.Equals(context.Exposure, "Environment", StringComparison.OrdinalIgnoreCase))
+            {
+                var name = context.Name?.ToLower() ?? string.Empty;
+                if ((name.Contains("password") || name.Contains("key") || name.Contains("username")) && context.Private != true)
+                {
+                    string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                    Console.WriteLine(msg);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateSec003(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (string.Equals(context.Exposure, "Environment", StringComparison.OrdinalIgnoreCase))
+            {
+                var name = context.Name?.ToLower() ?? string.Empty;
+                bool isCred = name.Contains("password") || name.Contains("key") || name.Contains("username");
+                if (isCred && !string.IsNullOrEmpty(context.InitialValue))
+                {
+                    string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                    Console.WriteLine(msg);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateEnv001(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            var value = context.InitialValue ?? string.Empty;
+            bool isAbsolute = value.StartsWith("\\\\") || System.Text.RegularExpressions.Regex.IsMatch(value, @"^[A-Za-z]:\\");
+            if (isAbsolute)
+            {
+                string msg = properties["Error Message"].ToString().Replace("{NAMEOFVAR}", context.Name);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateEnv002(Dictionary<string, object> properties, StageContext context)
+        {
+            if (!string.Equals(context.Type, "Data", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (string.Equals(context.Exposure, "Environment", StringComparison.OrdinalIgnoreCase))
+            {
+                string prefix = properties["Prefix"].ToString();
+                if (!context.Name.StartsWith(prefix))
+                {
+                    string msg = properties["Error Message"].ToString()
+                        .Replace("{NAMEOFVAR}", context.Name)
+                        .Replace("{PREFIX}", prefix);
+                    Console.WriteLine(msg);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateLog001(Dictionary<string, object> properties, StageContext context, Dictionary<string, object>? additionalProps)
+        {
+            if (!string.Equals(context.Type, "Action", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (additionalProps == null || !additionalProps.TryGetValue("Blocks", out var blocksObj) || blocksObj is not List<StageContext> blocks)
+            {
+                return true;
+            }
+
+            bool inside = blocks.Any(b => IsContextWithinBlock(context, b));
+            if (!inside)
+            {
+                string msg = properties["Error Message"].ToString().Replace("{STAGENAME}", context.Name);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateLog002(Dictionary<string, object> properties, StageContext context)
+        {
+            if (string.IsNullOrEmpty(context.Name))
+            {
+                return true;
+            }
+
+            var lower = context.Name.ToLower();
+            if (lower.Contains("recove") || lower.Contains("occurance"))
+            {
+                string msg = properties["Error Message"].ToString().Replace("{STAGENAME}", context.Name);
+                Console.WriteLine(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateLog003(Dictionary<string, object> properties, StageContext context)
+        {
+            if (string.IsNullOrEmpty(context.Name))
+            {
+                return true;
+            }
+
+            int maxLength = Convert.ToInt32(properties["Length"]);
+            if (context.Name.Length > maxLength)
+            {
+                string msg = properties["Error Message"].ToString()
+                    .Replace("{STAGENAME}", context.Name)
+                    .Replace("{LENGTH}", maxLength.ToString());
+                Console.WriteLine(msg);
                 return false;
             }
 

@@ -103,6 +103,43 @@
           "Active": true
         }
       }
-    }
+    },
+    "Security": {
+      "Rules": {
+        "SEC-001": {
+          "Description": "Sensitive data items must be private and should not have hard-coded values.",
+          "Error Message": "Sensitive variable {NAMEOFVAR} should be private and not contain a value.",
+          "Active": true
+        },
+        "SEC-002": {
+          "Description": "Environment variables containing secrets must be marked private.",
+          "Error Message": "Environment variable {NAMEOFVAR} appears sensitive but is not private.",
+          "Active": true
+        }
+      }
+    },
+    "Environment": {
+      "Rules": {
+        "ENV-001": {
+          "Description": "Data items should not contain absolute file paths.",
+          "Error Message": "Data item {NAMEOFVAR} contains an absolute file path.",
+          "Active": true
+        }
+      }
+    },
+    "Logic": {
+      "Rules": {
+        "LOG-001": {
+          "Description": "Action stages should be inside a block for proper error handling.",
+          "Error Message": "Action stage {STAGENAME} is not inside a Block stage.",
+          "Active": true
+        },
+        "LOG-002": {
+          "Description": "Stage names should not contain common spelling mistakes.",
+          "Error Message": "Stage name {STAGENAME} contains spelling errors.",
+          "Active": true
+        }
+      }
+    },
   }
 }

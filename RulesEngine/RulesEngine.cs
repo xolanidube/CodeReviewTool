@@ -231,7 +231,28 @@ namespace RulesEngine
 
                             
                             break;
-                            // Handle other groups as needed
+                        case "Security":
+                        case "Environment":
+                        case "Logic":
+                            var secContexts = contexts.GetContexts<StageContext>();
+                            if (ruleId == "LOG-001")
+                            {
+                                var blocks = secContexts.Where(s => s.Type.Equals("Block")).ToList();
+                                secContexts = secContexts.Where(s => s.Type.Equals("Action")).ToList();
+                                additionalProperties.Add("Blocks", blocks);
+                            }
+                            if (ruleId == "SEC-001" || ruleId == "SEC-002" || ruleId == "ENV-001")
+                            {
+                                secContexts = secContexts.Where(s => s.Type.Equals("Data") || s.Type.Equals("Action")).ToList();
+                            }
+
+                            foreach (var context in secContexts)
+                            {
+                                bool result = Evaluate(ruleId, context, additionalProperties);
+                                Console.WriteLine(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
+                            }
+                            break;
+                        // Handle other groups as needed
                     }
                 }
             }
@@ -316,6 +337,27 @@ namespace RulesEngine
                                     bool result = Evaluate(ruleId, context, additionalProperties);
                                     messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
                                 }
+                            }
+                            break;
+                        case "Security":
+                        case "Environment":
+                        case "Logic":
+                            var secContexts = contexts.GetContexts<StageContext>();
+                            if (ruleId == "LOG-001")
+                            {
+                                var blocks = secContexts.Where(s => s.Type.Equals("Block")).ToList();
+                                secContexts = secContexts.Where(s => s.Type.Equals("Action")).ToList();
+                                additionalProperties.Add("Blocks", blocks);
+                            }
+                            if (ruleId == "SEC-001" || ruleId == "SEC-002" || ruleId == "ENV-001")
+                            {
+                                secContexts = secContexts.Where(s => s.Type.Equals("Data") || s.Type.Equals("Action")).ToList();
+                            }
+
+                            foreach (var context in secContexts)
+                            {
+                                bool result = Evaluate(ruleId, context, additionalProperties);
+                                messages.Add(result ? $"Validation passed for rule {ruleId}." : $"Validation failed for rule {ruleId}.");
                             }
                             break;
                     }

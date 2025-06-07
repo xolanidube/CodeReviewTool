@@ -54,7 +54,12 @@
           "Process Settings Color": { "Name": "Process Settings", "Color": "Gray" },
           "Error Message": "Variable '{NAMEOFVAR}' on page '{PAGENAME}' is not inside its assigned block. Found inside block '{BLOCKNAME}' with color '{BLOCKCOLOR}'.",
           "Active": true
-        }
+        },
+        "VAR-007": {
+              "Description": "Variable names should not contain whitespace characters.",
+              "Error Message": "Variable '{NAMEOFVAR}' contains whitespace, which is not allowed.",
+              "Active": true
+            }
       }
     },
 
@@ -71,6 +76,13 @@
           "Description": "Checks if the page has a description defined by checking the number of words in it.",
           "Word Count": 15,
           "Error Message": "The minimum number of words in the description box required are {WORDCOUNT}",
+          "Active": true
+        },
+
+        "PAGE-003": {
+          "Description": "Validates that preconditions and postconditions contain a minimum amount of detail.",
+          "Word Count": 10,
+          "Error Message": "Preconditions or postconditions for page '{PAGENAME}' must contain at least {WORDCOUNT} words. Current counts are {PREACTUALWORDCOUNT} and {POSTACTUALWORDCOUNT}.",
           "Active": true
         }
       }

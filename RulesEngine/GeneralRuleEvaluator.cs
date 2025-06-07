@@ -52,6 +52,11 @@ namespace RulesEngine
                 case "VAR-007":
                     return EvaluateVar007(ruleProperties, stageContext);
 
+                case "STAGE-001":
+                    return EvaluateStage001(ruleProperties, stageContext);
+                case "STAGE-002":
+                    return EvaluateStage002(ruleProperties, stageContext, additionalprops);
+
                 // Add cases for other VAR-XXX as needed
                 default:
                     throw new NotImplementedException($"Evaluator for {ruleId} is not implemented.");
@@ -359,6 +364,48 @@ namespace RulesEngine
             if (!string.IsNullOrEmpty(variableName) && variableName.Any(char.IsWhiteSpace))
             {
                 string errorMessage = errorMessageTemplate.Replace("{NAMEOFVAR}", variableName);
+                Console.WriteLine(errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateStage001(Dictionary<string, object> properties, StageContext context)
+        {
+            int requiredWordCount = Convert.ToInt32(properties["Word Count"]);
+            var narrative = context.Narrative ?? string.Empty;
+            int wordCount = narrative.Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+
+            string errorMessage = properties["Error Message"].ToString()
+                .Replace("{STAGENAME}", context.Name)
+                .Replace("{PAGENAME}", context.PageName)
+                .Replace("{WORDCOUNT}", requiredWordCount.ToString());
+
+            if (wordCount < requiredWordCount)
+            {
+                Console.WriteLine(errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool EvaluateStage002(Dictionary<string, object> properties, StageContext context, Dictionary<string, object>? additionalProps)
+        {
+            if (additionalProps == null || !additionalProps.TryGetValue("AllStages", out var stagesObj) || stagesObj is not List<StageContext> allStages)
+            {
+                throw new ArgumentException("AllStages not provided or invalid in additionalProps.");
+            }
+
+            bool hasRecover = allStages.Any(s => s.Type == "Recover" && s.PageName == context.PageName && IsContextWithinBlock(s, context));
+
+            string errorMessage = properties["Error Message"].ToString()
+                .Replace("{BLOCKNAME}", context.Name)
+                .Replace("{PAGENAME}", context.PageName);
+
+            if (!hasRecover)
+            {
                 Console.WriteLine(errorMessage);
                 return false;
             }

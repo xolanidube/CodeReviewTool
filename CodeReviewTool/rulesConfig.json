@@ -87,6 +87,22 @@
         }
       }
 
+    },
+
+    "Stages": {
+      "Rules": {
+        "STAGE-001": {
+          "Description": "Ensures each stage includes a narrative of sufficient length for documentation.",
+          "Word Count": 5,
+          "Error Message": "Stage '{STAGENAME}' on page '{PAGENAME}' must contain a narrative of at least {WORDCOUNT} words.",
+          "Active": true
+        },
+        "STAGE-002": {
+          "Description": "Validates that Block stages include at least one Recover stage within their bounds to handle errors.",
+          "Error Message": "Block '{BLOCKNAME}' on page '{PAGENAME}' does not contain a Recover stage for error handling.",
+          "Active": true
+        }
+      }
     }
   }
 }

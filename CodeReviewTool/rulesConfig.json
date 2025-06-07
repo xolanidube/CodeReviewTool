@@ -115,6 +115,11 @@
           "Description": "Environment variables containing secrets must be marked private.",
           "Error Message": "Environment variable {NAMEOFVAR} appears sensitive but is not private.",
           "Active": true
+        },
+        "SEC-003": {
+          "Description": "Environment variables storing credentials must not have hard-coded values.",
+          "Error Message": "Environment variable {NAMEOFVAR} should not define a value directly.",
+          "Active": true
         }
       }
     },
@@ -123,6 +128,12 @@
         "ENV-001": {
           "Description": "Data items should not contain absolute file paths.",
           "Error Message": "Data item {NAMEOFVAR} contains an absolute file path.",
+          "Active": true
+        },
+        "ENV-002": {
+          "Description": "Environment variable names must start with the configured prefix.",
+          "Prefix": "EV_",
+          "Error Message": "Environment variable {NAMEOFVAR} should start with prefix {PREFIX}.",
           "Active": true
         }
       }
@@ -137,6 +148,12 @@
         "LOG-002": {
           "Description": "Stage names should not contain common spelling mistakes.",
           "Error Message": "Stage name {STAGENAME} contains spelling errors.",
+          "Active": true
+        },
+        "LOG-003": {
+          "Description": "Stage names should not exceed a maximum length for readability.",
+          "Length": 30,
+          "Error Message": "Stage name {STAGENAME} is longer than {LENGTH} characters.",
           "Active": true
         }
       }

@@ -241,9 +241,9 @@ namespace RulesEngine
                                 secContexts = secContexts.Where(s => s.Type.Equals("Action")).ToList();
                                 additionalProperties.Add("Blocks", blocks);
                             }
-                            if (ruleId == "SEC-001" || ruleId == "SEC-002" || ruleId == "ENV-001")
+                            if (ruleId == "SEC-001" || ruleId == "SEC-002" || ruleId == "SEC-003" || ruleId == "SEC-004" || ruleId == "ENV-001" || ruleId == "ENV-003")
                             {
-                                secContexts = secContexts.Where(s => s.Type.Equals("Data") || s.Type.Equals("Action")).ToList();
+                                secContexts = secContexts.Where(s => s.Type.Equals("Data")).ToList();
                             }
 
                             foreach (var context in secContexts)
@@ -349,9 +349,9 @@ namespace RulesEngine
                                 secContexts = secContexts.Where(s => s.Type.Equals("Action")).ToList();
                                 additionalProperties.Add("Blocks", blocks);
                             }
-                            if (ruleId == "SEC-001" || ruleId == "SEC-002" || ruleId == "ENV-001")
+                            if (ruleId == "SEC-001" || ruleId == "SEC-002" || ruleId == "SEC-003" || ruleId == "SEC-004" || ruleId == "ENV-001" || ruleId == "ENV-003")
                             {
-                                secContexts = secContexts.Where(s => s.Type.Equals("Data") || s.Type.Equals("Action")).ToList();
+                                secContexts = secContexts.Where(s => s.Type.Equals("Data")).ToList();
                             }
 
                             foreach (var context in secContexts)

@@ -120,6 +120,11 @@
           "Description": "Environment variables storing credentials must not have hard-coded values.",
           "Error Message": "Environment variable {NAMEOFVAR} should not define a value directly.",
           "Active": true
+        },
+        "SEC-004": {
+          "Description": "Credential related data items must use the password data type.",
+          "Error Message": "Data item {NAMEOFVAR} should use password type.",
+          "Active": true
         }
       }
     },
@@ -134,6 +139,12 @@
           "Description": "Environment variable names must start with the configured prefix.",
           "Prefix": "EV_",
           "Error Message": "Environment variable {NAMEOFVAR} should start with prefix {PREFIX}.",
+          "Active": true
+        },
+        "ENV-003": {
+          "Description": "Environment variable names must include a cluster identifier.",
+          "Clusters": ["RBB", "CIB", "IT", "HR"],
+          "Error Message": "Environment variable {NAMEOFVAR} must contain one of the clusters: {CLUSTERS}.",
           "Active": true
         }
       }
@@ -154,6 +165,11 @@
           "Description": "Stage names should not exceed a maximum length for readability.",
           "Length": 30,
           "Error Message": "Stage name {STAGENAME} is longer than {LENGTH} characters.",
+          "Active": true
+        },
+        "LOG-004": {
+          "Description": "Stage names should start with an uppercase letter.",
+          "Error Message": "Stage name {STAGENAME} should start with an uppercase letter.",
           "Active": true
         }
       }

@@ -58,8 +58,69 @@ public class GeneralRuleEvaluatorTests
         };
     }
 
+    private Dictionary<string, object> BuildSec004Properties()
+    {
+        return new Dictionary<string, object>
+        {
+            {"Error Message", "msg"}
+        };
+    }
 
 
+
+    [Fact]
+    public void EvaluateSec004_PlainTextCredential_ReturnsFalse()
+    {
+        var evaluator = new GeneralRuleEvaluator();
+        var props = BuildSec004Properties();
+        var context = new StageContext { Type = "Data", Name = "ApiKey", Datatype = "text" };
+
+        var result = evaluator.Evaluate("SEC-004", props, context, null);
+
+        Assert.False(result);
+    }
+
+    private Dictionary<string, object> BuildEnv003Properties()
+    {
+        return new Dictionary<string, object>
+        {
+            {"Clusters", JsonConvert.SerializeObject(new List<string>{"RBB","CIB"})},
+            {"Error Message", "msg"}
+        };
+    }
+
+    [Fact]
+    public void EvaluateEnv003_MissingCluster_ReturnsFalse()
+    {
+        var evaluator = new GeneralRuleEvaluator();
+        var props = BuildEnv003Properties();
+        var context = new StageContext { Type = "Data", Name = "EV_MISSING", Exposure = "Environment" };
+
+        var result = evaluator.Evaluate("ENV-003", props, context, null);
+
+        Assert.False(result);
+    }
+
+    private Dictionary<string, object> BuildLog004Properties()
+    {
+        return new Dictionary<string, object>
+        {
+            {"Error Message", "msg"}
+        };
+    }
+
+
+    [Fact]
+    public void EvaluateLog004_LowerCaseStart_ReturnsFalse()
+    {
+        var evaluator = new GeneralRuleEvaluator();
+        var props = BuildLog004Properties();
+        var context = new StageContext { Name = "lowerCase" };
+
+        var result = evaluator.Evaluate("LOG-004", props, context, null);
+
+        Assert.False(result);
+    }
     public void EvaluateSec001_PublicPassword_ReturnsFalse()
     {
         var evaluator = new GeneralRuleEvaluator();
